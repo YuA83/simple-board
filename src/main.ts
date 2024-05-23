@@ -7,6 +7,8 @@ async function bootstrap() {
     logger: winstonLogger, // 내장 로거 대체
   });
 
-  await app.listen(3000);
+  app.setGlobalPrefix("api");
+
+  await app.listen(process.env.PORT || 7000);
 }
 bootstrap();

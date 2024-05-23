@@ -1,5 +1,5 @@
-# env file
-/src/config/env
+# environment
+/src/config/env/*.env
 
 # compiled output
 /dist

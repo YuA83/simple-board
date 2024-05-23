@@ -2,6 +2,8 @@ import { utilities, WinstonModule } from "nest-winston";
 import * as winston from "winston";
 import * as winstonDaily from "winston-daily-rotate-file";
 
+const { simple, combine, timestamp, colorize } = winston.format;
+
 /**
  * 0: error
  * 1: warn
@@ -12,7 +14,7 @@ import * as winstonDaily from "winston-daily-rotate-file";
  * 6: silly
  */
 
-const environment = process.env.NODE_ENV;
+const isProd = process.env.NODE_ENV === "production";
 
 const dailyOptions = (level: string) => {
   return {
@@ -25,19 +27,18 @@ const dailyOptions = (level: string) => {
   };
 };
 
+const level = isProd ? "http" : "silly";
+const format = isProd
+  ? simple()
+  : combine(
+      timestamp(),
+      colorize(), // nest-winston 1.10.x 이상일 경우, appName 미출력
+      utilities.format.nestLike("SimpleBoard", { prettyPrint: true }),
+    );
+
 export const winstonLogger = WinstonModule.createLogger({
   transports: [
-    new winston.transports.Console({
-      level: environment === "production" ? "http" : "silly",
-      format:
-        environment === "production"
-          ? winston.format.simple()
-          : winston.format.combine(
-              winston.format.timestamp(),
-              winston.format.colorize(),
-              utilities.format.nestLike("SimpleBoard", { prettyPrint: true }),
-            ),
-    }),
+    new winston.transports.Console({ level, format }),
 
     // save as file
     new winstonDaily(dailyOptions("error")),
