@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { validationSchema } from "./config/validationSchema";
 import { LoggerMiddleware } from "./middlewares/logger.middleware";
+import { JwtModule } from "./jwt/jwt.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { LoggerMiddleware } from "./middlewares/logger.middleware";
       synchronize: process.env.DATABASE_SYNCHRONUZE === "true",
       entities: [`${__dirname}/**/*.entity.{ts,js}`],
     }),
+    JwtModule,
   ],
   controllers: [],
   providers: [Logger],
