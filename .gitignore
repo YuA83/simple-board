@@ -1,6 +1,9 @@
 # environment
 /src/config/env/*.env
 
+# db
+/data
+
 # compiled output
 /dist
 /node_modules
