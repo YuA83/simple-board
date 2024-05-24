@@ -5,4 +5,5 @@ export default registerAs("auth", () => ({
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE,
   },
+  cryptoRound: process.env.CRYPTO_ROUND,
 }));

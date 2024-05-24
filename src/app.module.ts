@@ -4,6 +4,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { validationSchema } from "./config/validationSchema";
 import { LoggerMiddleware } from "./middlewares/logger.middleware";
 import { JwtModule } from "./jwt/jwt.module";
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { JwtModule } from "./jwt/jwt.module";
       entities: [`${__dirname}/**/*.entity.{ts,js}`],
     }),
     JwtModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [Logger],
